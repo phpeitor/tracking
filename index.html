@@ -26,37 +26,6 @@
         </div>
     </div>
     
-    <!-- TOPBAR -->
-    <div class="cargo-topbar">
-        <div class="container">
-            <div class="topbar-grid">
-                <div class="topbar-left">
-                    <span class="topbar-item">
-                        <i class="fa-solid fa-earth-americas"></i>
-                        <span>Global Logistics Excellence</span>
-                    </span>
-                    <span class="topbar-divider"></span>
-                    <span class="topbar-item">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>Mon - Sat: 08:00 - 18:00</span>
-                    </span>
-                </div>
-                <div class="topbar-right">
-                    <div class="social-links">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                    <span class="topbar-divider"></span>
-                    <span class="topbar-item topbar-phone">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>+62 812-9000-2211</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- HEADER -->
     <header class="cargo-header">
         <div class="container">
@@ -65,55 +34,8 @@
                     <img src="./img/logo-white.png" alt="logo" class="logo">
                     <img src="./img/logo.png" alt="logo" class="logo-dark">
                 </a>
-                
-                 <nav class="main-nav">
-                    <ul class="nav-menu">
-                        <li class="has-child"><a href="index.html" class="nav-link">Home</a>
-                            <ul>
-                                <li><a href="index.html">Home Default</a></li>
-                                <li><a href="home-video.html">Home Video</a></li>
-                                <li><a href="home-slider.html">Home Slider</a></li>
-                                <li><a href="home-split.html">Home Split Screen</a></li>
-                                <li><a href="home-centered.html">Home Centered</a></li>
-                                <li><a href="intro/index.html">Intro</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-child"><a href="services.html" class="nav-link">Services</a>
-                            <ul>
-                                <li><a href="service-details.html">Ocean Freight</a></li>
-                                <li><a href="service-details-air.html">Air Cargo</a></li>
-                                <li><a href="service-details-land.html">Land Transport</a></li>
-                                <li><a href="service-details-warehousing.html">Warehousing</a></li>
-                                <li><a href="service-details-customs.html">Customs Clearance</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-child"><a href="tracking.html" class="nav-link">Tracking</a>
-                             <ul>
-                                <li><a href="tracking.html">Tracking Default</a></li>
-                                <li><a href="tracking-alt.html">Tracking 2</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-child"><a href="about.html" class="nav-link">Company</a>
-                            <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="our-fleet.html">Our Fleet</a></li>
-                                <li><a href="team.html">Team</a></li>
-                                <li><a href="careers.html">Careers</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-child"><a href="blog.html" class="nav-link">Blog</a>
-                            <ul>
-                                <li><a href="blog.html">Blog List</a></li>
-                                <li><a href="blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html" class="nav-link">Contact</a></li>
-                    </ul>
-                </nav>
 
                 <div class="header-actions d-flex align-items-center gap-4">
-                        <a href="get-quote.html" class="btn-header" data-hover="Get Quote"><span>Get Quote</span></a>
                         <div id="btn-extra" class="d-none d-lg-block">
                             <span></span>
                             <span></span>
@@ -146,18 +68,22 @@
                 <div class="col-lg-8">
                     <div class="tracking-search-box text-center mb-5">
                         <h2 class="section-title mb-4">Enter Your Tracking Number</h2>
-                        <form class="track-form-large">
+                        <form class="track-form-large" id="track-form">
                             <div class="input-group">
-                                <input type="text" placeholder="e.g. CRGZ-8829100" class="form-control" value="CRGZ-8829100">
-                                <button type="button" class="btn btn-primary" data-hover="Track Result">Track Result</button>
+                                <input type="text" id="track-input" placeholder="e.g. MGI-G-2026-22" class="form-control">
+                                <button type="submit" class="btn btn-primary" data-hover="Track Result">Track Result</button>
                             </div>
                         </form>
+                        <div id="track-loading" class="mt-4" style="display:none;">
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Consultando, por favor espere...
+                        </div>
+                        <div id="track-alert"></div>
                     </div>
                 </div>
             </div>
 
             
-            <div class="tracking-result mt-5">
+            <div class="tracking-result mt-5" id="tracking-result" style="display:none;">
                 <div class="row">
                     <!-- Shipment Info -->
                     <div class="col-lg-4 mb-5 mb-lg-0">
@@ -166,27 +92,27 @@
                             <ul class="shipment-list">
                                 <li>
                                     <span class="label">Tracking ID:</span>
-                                    <span class="value">CRGZ-8829100</span>
+                                    <span class="value" id="ship-tracking-id">-</span>
                                 </li>
                                 <li>
-                                    <span class="label">Service Type:</span>
-                                    <span class="value">Ocean Freight</span>
+                                    <span class="label">Nombre:</span>
+                                    <span class="value" id="ship-nombre">-</span>
                                 </li>
                                 <li>
-                                    <span class="label">Weight:</span>
-                                    <span class="value">2,500 KG</span>
+                                    <span class="label">Empresa:</span>
+                                    <span class="value" id="ship-empresa">-</span>
                                 </li>
                                 <li>
-                                    <span class="label">Dimensions:</span>
-                                    <span class="value">20x8x8 ft</span>
+                                    <span class="label">RUC:</span>
+                                    <span class="value" id="ship-ruc">-</span>
                                 </li>
                                 <li>
-                                    <span class="label">Shipped Date:</span>
-                                    <span class="value">Oct 20, 2026</span>
+                                    <span class="label">Fecha de Creación:</span>
+                                    <span class="value" id="ship-created">-</span>
                                 </li>
                                 <li>
-                                    <span class="label">Estimated Delivery:</span>
-                                    <span class="value">Oct 28, 2026</span>
+                                    <span class="label">Última Actualización:</span>
+                                    <span class="value" id="ship-updated">-</span>
                                 </li>
                             </ul>
                         </div>
@@ -195,66 +121,7 @@
                     <!-- Timeline -->
                     <div class="col-lg-8 ps-lg-5">
                         <h3 class="h4-style mb-4">Shipment Progress</h3>
-                        <div class="tracking-timeline">
-                            
-                            <div class="timeline-item completed">
-                                <div class="timeline-marker">
-                                    <i class="fa-solid fa-box"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <span class="date">Oct 20, 2026 - 09:30 AM</span>
-                                    <h3 class="h5-style title">Package Received</h3>
-                                    <p class="desc">Shipment received at Shanghai Origin Facility.</p>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="timeline-item completed">
-                                <div class="timeline-marker">
-                                    <i class="fa-solid fa-truck-loading"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <span class="date">Oct 21, 2026 - 14:15 PM</span>
-                                    <h3 class="h5-style title">Departure from Origin</h3>
-                                    <p class="desc">Shipment has left the origin facility and is en route to the port.</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="timeline-item active">
-                                <div class="timeline-marker">
-                                    <i class="fa-solid fa-ship"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <span class="date">Oct 24, 2026 - 11:00 AM</span>
-                                    <h3 class="h5-style title">In Transit (Ocean)</h3>
-                                    <p class="desc">Vessel departed from Port of Shanghai. Currently in transit to Jakarta.</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-marker">
-                                    <i class="fa-solid fa-warehouse"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <span class="date">Expected: Oct 27, 2026</span>
-                                    <h3 class="h5-style title">Arrival at Destination Port</h3>
-                                    <p class="desc">Vessel scheduled to arrive at Tanjung Priok Port.</p>
-                                </div>
-                            </div>
-
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-marker">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <span class="date">Expected: Oct 28, 2026</span>
-                                    <h3 class="h5-style title">Delivered</h3>
-                                    <p class="desc">Package delivered to the recipient.</p>
-                                </div>
-                            </div>
+                        <div class="tracking-timeline" id="tracking-timeline">
                         </div>
                     </div>
                 </div>
@@ -265,7 +132,7 @@
 
     <!-- FOOTER -->
     <footer class="footer-main">
-        <div class="footer-top">
+        <!--<div class="footer-top">
             <div class="container">
                 <div class="footer-grid">
                     <div class="footer-col footer-about">
@@ -308,7 +175,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="footer-bottom">
             <div class="container">
                 <p>&copy; 2026 Cargonz Logistics. All rights reserved. <a href="faq.html">Privacy Policy</a> | <a href="faq.html">Terms of Service</a></p>
@@ -379,6 +246,7 @@
         </svg>
     </div>
 
+    <script src="./js/jquery.min.js"></script>
     <script src="./js/plugins.js"></script>
     <script src="./js/main.js"></script>
 </body>

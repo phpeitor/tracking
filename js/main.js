@@ -428,4 +428,149 @@ $(document).ready(function() {
         });
     }
 
+    /* ==================================================
+       # Tracking Form Handling
+    ================================================== */
+    const TRACKING_API = 'http://127.0.0.1/cotix/controller/tracking/api_tracking.php';
+
+    const trackForm = document.getElementById('track-form');
+    const trackInput = document.getElementById('track-input');
+    const trackLoading = document.getElementById('track-loading');
+    const trackAlert = document.getElementById('track-alert');
+    const trackingResult = document.getElementById('tracking-result');
+    const trackingTimeline = document.getElementById('tracking-timeline');
+
+    const faseIcons = {
+        'inicio': 'fa-box-open',
+        'planificacion': 'fa-clipboard-list',
+        'fabricacion': 'fa-industry',
+        'instalacionentrega': 'fa-truck-ramp-box',
+        'cierre': 'fa-flag-checkered'
+    };
+
+    function faseIcon(fase) {
+        if (!fase) return 'fa-circle-check';
+        const key = fase.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]/g, '');
+        return faseIcons[key] || 'fa-circle-check';
+    }
+
+    function formatDate(str) {
+        if (!str) return '-';
+        const d = new Date(str.replace(' ', 'T'));
+        if (isNaN(d)) return str;
+        const opts = { year: 'numeric', month: 'short', day: 'numeric' };
+        const datePart = d.toLocaleDateString('en-US', opts);
+        const timePart = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        return datePart + ' - ' + timePart;
+    }
+
+    function formatDateOnly(str) {
+        if (!str) return '-';
+        const d = new Date(str + 'T00:00:00');
+        if (isNaN(d)) return str;
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function showAlert(message, type) {
+        trackAlert.innerHTML = '';
+        if (!message) return;
+        const div = document.createElement('div');
+        div.className = 'alert alert-' + (type === 'success' ? 'success' : 'danger') + ' mt-4';
+        div.setAttribute('role', 'alert');
+        div.textContent = message;
+        trackAlert.appendChild(div);
+    }
+
+    function renderTimeline(actividades) {
+        trackingTimeline.innerHTML = '';
+        if (!actividades || !actividades.length) {
+            trackingTimeline.innerHTML = '<div class="alert alert-info">No hay actividades registradas para este tracking.</div>';
+            return;
+        }
+
+        actividades.forEach(function(act, index) {
+            const isLast = index === actividades.length - 1;
+            const item = document.createElement('div');
+            item.className = 'timeline-item' + (isLast ? ' active' : ' completed');
+
+            const marker = document.createElement('div');
+            marker.className = 'timeline-marker';
+            marker.innerHTML = '<i class="fa-solid ' + faseIcon(act.fase) + '"></i>';
+
+            const content = document.createElement('div');
+            content.className = 'timeline-content';
+
+            let obs = '';
+            if (act.observacion) {
+                obs = '<p class="desc">' + act.observacion + '</p>';
+            }
+            content.innerHTML =
+                '<span class="date">' + (act.fase || '') + ' - ' + formatDateOnly(act.fecha) + '</span>' +
+                '<h3 class="h5-style title">' + act.actividad + '</h3>' +
+                obs;
+
+            item.appendChild(marker);
+            item.appendChild(content);
+            trackingTimeline.appendChild(item);
+        });
+    }
+
+    function renderResult(data) {
+        document.getElementById('ship-tracking-id').textContent = data.cod_tracking || '-';
+        document.getElementById('ship-nombre').textContent = data.nombre || '-';
+        document.getElementById('ship-empresa').textContent = data.razon_social_empresa || '-';
+        document.getElementById('ship-ruc').textContent = data.ruc || '-';
+        document.getElementById('ship-created').textContent = formatDate(data.created_at);
+        document.getElementById('ship-updated').textContent = formatDate(data.updated_at);
+
+        renderTimeline(data.actividades);
+        trackingResult.style.display = 'block';
+        trackingResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function loadTracking(code) {
+        showAlert('', 'danger');
+        trackLoading.style.display = 'block';
+
+        fetch(TRACKING_API + '?cod_tracking=' + encodeURIComponent(code))
+            .then(function(response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.json();
+            })
+            .then(function(json) {
+                trackLoading.style.display = 'none';
+                if (json.ok && json.data) {
+                    renderResult(json.data);
+                } else {
+                    trackingResult.style.display = 'none';
+                    showAlert(json.message || 'No se encontró información para el código ingresado.', 'danger');
+                }
+            })
+            .catch(function() {
+                trackLoading.style.display = 'none';
+                trackingResult.style.display = 'none';
+                showAlert('Ocurrió un error al consultar el tracking. Inténtalo nuevamente.', 'danger');
+            });
+    }
+
+    if (trackForm) {
+        trackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = trackInput.value.trim();
+            if (!code) {
+                showAlert('Por favor ingresa un código de tracking.', 'danger');
+                return;
+            }
+            loadTracking(code);
+        });
+    }
+
+    // Auto-search when the code comes via URL (?cod_tracking=...)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCode = urlParams.get('cod_tracking') || urlParams.get('code');
+    if (urlCode && trackInput) {
+        trackInput.value = urlCode;
+        loadTracking(urlCode);
+    }
+
 });
