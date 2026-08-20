@@ -1546,6 +1546,21 @@ a:hover {
   background: rgba(15, 23, 42, 0.85);
 }
 
+.page-header.has-video::before {
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 1;
+}
+
+.page-header-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 .page-header-content {
   position: relative;
   z-index: 2;
