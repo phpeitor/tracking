@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Shipment - Cargonz Logistics</title>
+    <title>Tracking360</title>
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="amvsoft.tech" name="author" />
+    <link rel="shortcut icon" href="./img/favicon-original.svg">
     <!-- Font awesome CSS -->
     <link rel="stylesheet" href="./css/font.awesome.min.css">
     <!-- Bootstrap 5 CSS -->
@@ -52,7 +55,7 @@
     <!-- PAGE HEADER -->
     <section class="page-header" style="background-image: url('./img/img(10).jpg');">
         <div class="container page-header-content">
-            <h1 class="page-title">Track Shipment</h1>
+            <h1 class="page-title">Tracking</h1>
             <div class="breadcrumb">
                 <a href="index.html">Home</a>
                 <span class="breadcrumb-icon"><i class="fa-solid fa-angle-right"></i></span>
@@ -66,11 +69,11 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="tracking-search-box text-center mb-5">
-                        <h2 class="section-title mb-4">Enter Your Tracking Number</h2>
+                    <div class="tracking-search-box text-center mb-1">
+                        <h2 class="section-title mb-4">Rastreo y Seguimiento</h2>
                         <form class="track-form-large" id="track-form">
                             <div class="input-group">
-                                <input type="text" id="track-input" placeholder="e.g. MGI-G-2026-22" class="form-control">
+                                <input type="text" id="track-input" placeholder="ej. MGI-G-2026-987654321" class="form-control">
                                 <button type="submit" class="btn btn-primary" data-hover="Track Result">Track Result</button>
                             </div>
                         </form>
@@ -88,7 +91,6 @@
                     <!-- Shipment Info -->
                     <div class="col-lg-4 mb-5 mb-lg-0">
                         <div class="shipment-info-card">
-                            <h3 class="h4-style mb-4">Shipment Details</h3>
                             <ul class="shipment-list">
                                 <li>
                                     <span class="label">Tracking ID:</span>
@@ -106,21 +108,13 @@
                                     <span class="label">RUC:</span>
                                     <span class="value" id="ship-ruc">-</span>
                                 </li>
-                                <li>
-                                    <span class="label">Fecha de Creación:</span>
-                                    <span class="value" id="ship-created">-</span>
-                                </li>
-                                <li>
-                                    <span class="label">Última Actualización:</span>
-                                    <span class="value" id="ship-updated">-</span>
-                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Timeline -->
                     <div class="col-lg-8 ps-lg-5">
-                        <h3 class="h4-style mb-4">Shipment Progress</h3>
+                        <h3 class="h4-style mb-4">Actividades</h3>
                         <div class="tracking-timeline" id="tracking-timeline">
                         </div>
                     </div>
@@ -178,7 +172,7 @@
         </div>-->
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 Cargonz Logistics. All rights reserved. <a href="faq.html">Privacy Policy</a> | <a href="faq.html">Terms of Service</a></p>
+                <p><script>document.write(new Date().getFullYear())</script> © Tracking360 - by <a href="#">amvsoft.tech</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -195,40 +189,47 @@
                 <img src="./img/logo.png" alt="logo" class="logo">
             </a>
 
-            <h2 class="mb-3 h5-style">Our Services</h2>
+            <h2 class="mb-3 h5-style">Servicios</h2>
             <ul class="ul-check mb-4">
-                <li><a href="service-details.html">Ocean Freight</a></li>
-                <li><a href="service-details-air.html">Air Cargo</a></li>
-                <li><a href="service-details-land.html">Land Transport</a></li>
-                <li><a href="service-details-warehousing.html">Warehousing</a></li>
-                <li><a href="service-details-customs.html">Customs Clearance</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Instalaciones eléctricas en media y baja tensión</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Diseño y montaje de tableros eléctricos</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Project Engineering</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Industrial Electrical Services</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Industrial Connectivity Services</a></li>
             </ul>
 
-            <h2 class="mb-3 h5-style">Contact Info</h2>
+            <h2 class="mb-3 h5-style">Contacto</h2>
             <div class="contact-info-item">
                 <i class="fa fa-clock"></i>
                 <div>
-                    <strong>Opening Hours</strong>
-                    Mon - Fri: 08.00 - 18.00
+                    <strong>Horario</strong>
+                    Lun - Vie: 09:00 - 18:00
                 </div>
             </div>
             <div class="contact-info-item">
                 <i class="fa fa-map-marker"></i>
                 <div>
-                    <strong>Address</strong>
-                    123 Logistics Blvd, Jakarta
+                    <strong>Dirección</strong>
+                    Calle Brea y Pariñas 102. Of 704.
+                    Santiago de Surco.
+                    Lima - Perú
                 </div>
             </div>
             <div class="contact-info-item mb-4">
                 <i class="fa fa-envelope"></i>
                 <div>
                     <strong>Email</strong>
-                    info@cargonz.com
+                    contacto@mgindusol.com
                 </div>
             </div>
-
-            <h2 class="mb-3 h5-style">About Cargonz</h2>
-            <p class="mb-4">We are a leading logistics provider committed to delivering excellence in every shipment. Trust us to move your business forward.</p>
+            <div class="contact-info-item mb-4">
+                <i class="fa fa-phone"></i>
+                <div>
+                    <strong>Teléfono</strong>
+                    (511) 304 - 8091 <br/>
+                    (51) 993 362 354
+                </div>
+            </div>
 
             <div class="social-icons-group">
                 <a href="#" class="social-icon-box"><i class="fa-brands fa-facebook"></i></a>

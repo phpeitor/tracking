@@ -431,7 +431,8 @@ $(document).ready(function() {
     /* ==================================================
        # Tracking Form Handling
     ================================================== */
-    const TRACKING_API = 'http://127.0.0.1/cotix/controller/tracking/api_tracking.php';
+    const DEFAULT_TRACKING_API = 'http://127.0.0.1/cotix/controller/tracking/api_tracking.php';
+    let TRACKING_API = DEFAULT_TRACKING_API;
 
     const trackForm = document.getElementById('track-form');
     const trackInput = document.getElementById('track-input');
@@ -515,13 +516,20 @@ $(document).ready(function() {
         });
     }
 
+    function setField(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    }
+
     function renderResult(data) {
-        document.getElementById('ship-tracking-id').textContent = data.cod_tracking || '-';
-        document.getElementById('ship-nombre').textContent = data.nombre || '-';
-        document.getElementById('ship-empresa').textContent = data.razon_social_empresa || '-';
-        document.getElementById('ship-ruc').textContent = data.ruc || '-';
-        document.getElementById('ship-created').textContent = formatDate(data.created_at);
-        document.getElementById('ship-updated').textContent = formatDate(data.updated_at);
+        setField('ship-tracking-id', data.cod_tracking || '-');
+        setField('ship-nombre', data.nombre || '-');
+        setField('ship-empresa', data.razon_social_empresa || '-');
+        setField('ship-ruc', data.ruc || '-');
+        if (data.created_at || data.updated_at) {
+            setField('ship-created', formatDate(data.created_at));
+            setField('ship-updated', formatDate(data.updated_at));
+        }
 
         renderTimeline(data.actividades);
         trackingResult.style.display = 'block';
@@ -553,24 +561,42 @@ $(document).ready(function() {
             });
     }
 
-    if (trackForm) {
-        trackForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const code = trackInput.value.trim();
-            if (!code) {
-                showAlert('Por favor ingresa un código de tracking.', 'danger');
-                return;
-            }
-            loadTracking(code);
-        });
+    function initTracking() {
+        if (trackForm) {
+            trackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const code = trackInput.value.trim();
+                if (!code) {
+                    showAlert('Por favor ingresa un código de tracking.', 'danger');
+                    return;
+                }
+                loadTracking(code);
+            });
+        }
+
+        // Auto-search when the code comes via URL (?cod_tracking=...)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCode = urlParams.get('cod_tracking') || urlParams.get('code');
+        if (urlCode && trackInput) {
+            trackInput.value = urlCode;
+            loadTracking(urlCode);
+        }
     }
 
-    // Auto-search when the code comes via URL (?cod_tracking=...)
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlCode = urlParams.get('cod_tracking') || urlParams.get('code');
-    if (urlCode && trackInput) {
-        trackInput.value = urlCode;
-        loadTracking(urlCode);
-    }
+    // Load API endpoint from server config (.env); fallback to default
+    fetch('config/config-js.php')
+        .then(function(response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+        })
+        .then(function(cfg) {
+            if (cfg && cfg.tracking_api_url) {
+                TRACKING_API = cfg.tracking_api_url.trim();
+            }
+            initTracking();
+        })
+        .catch(function() {
+            initTracking();
+        });
 
 });
