@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+﻿<!DOCTYPE html>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tracking360</title>
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="amvsoft.tech" name="author" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
+    <meta content="amvsoft.tech" name="author">
     <link rel="shortcut icon" href="./resources/favicon-original.svg">
     <!-- Font awesome CSS -->
     <link rel="stylesheet" href="./css/font.awesome.min.css">
@@ -17,14 +16,14 @@
     <link href="./css/cargo-theme.css" rel="stylesheet" type="text/css">
     <link href="./css/preloader.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="loaded">
     <!-- Preloader -->
     <!-- Preloader -->
-    <div id="preloader">
+    <div id="preloader" style="display: none;">
         <div class="loader-content">
             <div class="loader-logo"><img src="./resources/logo-white.png" alt="logo" class="logo"></div>
             <div class="loader-progress-wrap">
-                <div class="loader-progress-bar"></div>
+                <div class="loader-progress-bar" style="width: 100%;"></div>
             </div>
         </div>
     </div>
@@ -54,7 +53,7 @@
 
 <!-- PAGE HEADER -->
     <section class="page-header has-video" style="background-image: url('./resources/img(10).jpg');">
-        <video class="page-header-video" src="./resources/main.mp4" autoplay muted loop playsinline preload="auto" poster="./resources/img(10).jpg"></video>
+        <video class="page-header-video" src="./resources/main.mp4" autoplay="" muted="" loop="" playsinline="" preload="auto" poster="./resources/img(10).jpg"></video>
         <div class="container page-header-content">
             <h1 class="page-title">Tracking</h1>
             <div class="breadcrumb">
@@ -66,7 +65,7 @@
     </section>
 
     <!-- TRACKING SECTION -->
-    <section class="section-padding">
+    <section class="section-padding fade-on-scroll visible">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
@@ -129,7 +128,7 @@
     </section>
 
     <!-- FAQ SECTION -->
-    <section class="section-padding" style="background: #f8fafc;">
+    <section class="section-padding fade-on-scroll" style="background: #f8fafc;">
         <div class="container">
             <h2 class="section-title text-center mb-4">Preguntas Frecuentes</h2>
             <div class="row justify-content-center">
@@ -241,7 +240,7 @@
         </div>-->
         <div class="footer-bottom">
             <div class="container">
-                <p><script>document.write(new Date().getFullYear())</script> © Tracking360 - by <a href="#">amvsoft.tech</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                <p><script>document.write(new Date().getFullYear())</script>2026 ┬® Tracking360 - by <a href="#">amvsoft.tech</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
             </div>
         </div>
     </footer>
@@ -260,8 +259,8 @@
 
             <h2 class="mb-3 h5-style">Servicios</h2>
             <ul class="ul-check mb-4">
-                <li><a href="https://mgindusol.com/servicios" target="_blank">Instalaciones eléctricas en media y baja tensión</a></li>
-                <li><a href="https://mgindusol.com/servicios" target="_blank">Diseño y montaje de tableros eléctricos</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Instalaciones el├®ctricas en media y baja tensi├│n</a></li>
+                <li><a href="https://mgindusol.com/servicios" target="_blank">Dise├▒o y montaje de tableros el├®ctricos</a></li>
                 <li><a href="https://mgindusol.com/servicios" target="_blank">Project Engineering</a></li>
                 <li><a href="https://mgindusol.com/servicios" target="_blank">Industrial Electrical Services</a></li>
                 <li><a href="https://mgindusol.com/servicios" target="_blank">Industrial Connectivity Services</a></li>
@@ -278,10 +277,10 @@
             <div class="contact-info-item">
                 <i class="fa fa-map-marker"></i>
                 <div>
-                    <strong>Dirección</strong>
-                    Calle Brea y Pariñas 102. Of 704.
+                    <strong>Direcci├│n</strong>
+                    Calle Brea y Pari├▒as 102. Of 704.
                     Santiago de Surco.
-                    Lima - Perú
+                    Lima - Per├║
                 </div>
             </div>
             <div class="contact-info-item mb-4">
@@ -294,8 +293,8 @@
             <div class="contact-info-item mb-4">
                 <i class="fa fa-phone"></i>
                 <div>
-                    <strong>Teléfono</strong>
-                    (511) 304 - 8091 <br/>
+                    <strong>Tel├®fono</strong>
+                    (511) 304 - 8091 <br>
                     (51) 993 362 354
                 </div>
             </div>
@@ -312,12 +311,13 @@
     <!-- Scroll To Top -->
     <div class="progress-wrap">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;"></path>
         </svg>
     </div>
 
     <script src="./js/jquery.min.js"></script>
     <script src="./js/plugins.js"></script>
     <script src="./js/main.js"></script>
-</body>
-</html>
+
+
+</body></html>

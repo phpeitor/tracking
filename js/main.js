@@ -436,23 +436,30 @@ $(document).ready(function() {
 
     const trackForm = document.getElementById('track-form');
     const trackInput = document.getElementById('track-input');
+    const trackBtn = document.getElementById('track-btn');
     const trackLoading = document.getElementById('track-loading');
     const trackAlert = document.getElementById('track-alert');
     const trackingResult = document.getElementById('tracking-result');
     const trackingTimeline = document.getElementById('tracking-timeline');
 
-    const faseIcons = {
-        'inicio': 'fa-box-open',
-        'planificacion': 'fa-clipboard-list',
-        'fabricacion': 'fa-industry',
-        'instalacionentrega': 'fa-truck-ramp-box',
-        'cierre': 'fa-flag-checkered'
-    };
+    const PHASES = [
+        { name: 'Inicio', icon: 'fa-box-open' },
+        { name: 'Planificación', icon: 'fa-clipboard-list' },
+        { name: 'Fabricación', icon: 'fa-industry' },
+        { name: 'Instalación / Entrega', icon: 'fa-truck-ramp-box' },
+        { name: 'Cierre', icon: 'fa-flag-checkered' }
+    ];
+
+    function normalizeFase(fase) {
+        return String(fase || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]/g, '');
+    }
 
     function faseIcon(fase) {
-        if (!fase) return 'fa-circle-check';
-        const key = fase.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]/g, '');
-        return faseIcons[key] || 'fa-circle-check';
+        const key = normalizeFase(fase);
+        for (let i = 0; i < PHASES.length; i++) {
+            if (normalizeFase(PHASES[i].name) === key) return PHASES[i].icon;
+        }
+        return 'fa-circle-check';
     }
 
     function formatDate(str) {
@@ -482,6 +489,16 @@ $(document).ready(function() {
         trackAlert.appendChild(div);
     }
 
+    function groupActividadesByFase(actividades) {
+        const groups = new Map();
+        actividades.forEach(function(act) {
+            const key = normalizeFase(act.fase);
+            if (!groups.has(key)) groups.set(key, { fase: act.fase, items: [] });
+            groups.get(key).items.push(act);
+        });
+        return groups;
+    }
+
     function renderTimeline(actividades) {
         trackingTimeline.innerHTML = '';
         if (!actividades || !actividades.length) {
@@ -489,27 +506,69 @@ $(document).ready(function() {
             return;
         }
 
-        actividades.forEach(function(act, index) {
-            const isLast = index === actividades.length - 1;
+        const byFase = groupActividadesByFase(actividades);
+        let lastWithData = -1;
+        PHASES.forEach(function(p, index) {
+            if (byFase.has(normalizeFase(p.name))) lastWithData = index;
+        });
+
+        PHASES.forEach(function(p, index) {
+            const key = normalizeFase(p.name);
+            const group = byFase.get(key);
+            if (!group) return;
+
+            const estado = index < lastWithData ? ' completed' : (index === lastWithData ? ' active' : '');
             const item = document.createElement('div');
-            item.className = 'timeline-item' + (isLast ? ' active' : ' completed');
+            item.className = 'timeline-item' + estado;
 
             const marker = document.createElement('div');
             marker.className = 'timeline-marker';
-            marker.innerHTML = '<i class="fa-solid ' + faseIcon(act.fase) + '"></i>';
+            marker.innerHTML = '<i class="fa-solid ' + p.icon + '"></i>';
 
             const content = document.createElement('div');
             content.className = 'timeline-content';
 
-            let obs = '';
-            if (act.observacion) {
-                obs = '<p class="desc">' + act.observacion + '</p>';
-            }
-            content.innerHTML =
-                '<span class="date">' + (act.fase || '') + ' - ' + formatDateOnly(act.fecha) + '</span>' +
-                '<h3 class="h5-style title">' + act.actividad + '</h3>' +
-                obs;
+            const itemsHtml = group.items.map(function(act) {
+                let obs = '';
+                if (act.observacion) obs = '<span class="act-obs">' + act.observacion + '</span>';
+                return '<li><i class="fa-solid fa-check"></i><div>' +
+                    '<span class="act-title">' + act.actividad + '</span>' + obs +
+                    '</div><span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
+            }).join('');
 
+            const fechas = group.items.map(function(act) { return act.fecha; }).filter(Boolean);
+            const rango = fechas.length === 1 ? formatDateOnly(fechas[0])
+                : formatDateOnly(fechas[0]) + ' - ' + formatDateOnly(fechas[fechas.length - 1]);
+
+            content.innerHTML = '<span class="date">' + rango + '</span>' +
+                '<h3 class="h5-style title">' + (group.fase || p.name) + '</h3>' +
+                '<ul class="fase-actividades">' + itemsHtml + '</ul>';
+
+            item.appendChild(marker);
+            item.appendChild(content);
+            trackingTimeline.appendChild(item);
+        });
+
+        // Append any fase not part of the 5 phases (orden de llegada)
+        byFase.forEach(function(group) {
+            const key = normalizeFase(group.fase);
+            const conocido = PHASES.some(function(p) { return normalizeFase(p.name) === key; });
+            if (conocido) return;
+
+            const item = document.createElement('div');
+            item.className = 'timeline-item completed';
+            const marker = document.createElement('div');
+            marker.className = 'timeline-marker';
+            marker.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            const content = document.createElement('div');
+            content.className = 'timeline-content';
+            const itemsHtml = group.items.map(function(act) {
+                return '<li><i class="fa-solid fa-check"></i><div><span class="act-title">' + act.actividad + '</span></div>' +
+                    '<span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
+            }).join('');
+            content.innerHTML = '<span class="date">' + group.fase + '</span>' +
+                '<h3 class="h5-style title">' + group.fase + '</h3>' +
+                '<ul class="fase-actividades">' + itemsHtml + '</ul>';
             item.appendChild(marker);
             item.appendChild(content);
             trackingTimeline.appendChild(item);
@@ -521,8 +580,19 @@ $(document).ready(function() {
         if (el) el.textContent = value;
     }
 
+    function codigoPublico(data) {
+        if (data.cod_publico && data.cod_tracking) {
+            const guion = data.cod_tracking.lastIndexOf('-');
+            if (guion > -1) {
+                return data.cod_tracking.slice(0, guion) + '-' + data.cod_publico;
+            }
+            return data.cod_tracking + '-' + data.cod_publico;
+        }
+        return data.cod_tracking || '-';
+    }
+
     function renderResult(data) {
-        setField('ship-tracking-id', data.cod_tracking || '-');
+        setField('ship-tracking-id', codigoPublico(data));
         setField('ship-nombre', data.nombre || '-');
         setField('ship-empresa', data.razon_social_empresa || '-');
         setField('ship-ruc', data.ruc || '-');
@@ -536,9 +606,26 @@ $(document).ready(function() {
         trackingResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function setLoading(show) {
+        trackLoading.style.display = show ? 'flex' : 'none';
+        if (trackBtn) {
+            if (show) {
+                trackBtn.disabled = true;
+                trackBtn.dataset.originalHtml = trackBtn.innerHTML;
+                trackBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Consultando';
+            } else {
+                trackBtn.disabled = false;
+                if (trackBtn.dataset.originalHtml) {
+                    trackBtn.innerHTML = trackBtn.dataset.originalHtml;
+                    delete trackBtn.dataset.originalHtml;
+                }
+            }
+        }
+    }
+
     function loadTracking(code) {
         showAlert('', 'danger');
-        trackLoading.style.display = 'block';
+        setLoading(true);
 
         fetch(TRACKING_API + '?cod_tracking=' + encodeURIComponent(code))
             .then(function(response) {
@@ -546,7 +633,7 @@ $(document).ready(function() {
                 return response.json();
             })
             .then(function(json) {
-                trackLoading.style.display = 'none';
+                setLoading(false);
                 if (json.ok && json.data) {
                     renderResult(json.data);
                 } else {
@@ -555,7 +642,7 @@ $(document).ready(function() {
                 }
             })
             .catch(function() {
-                trackLoading.style.display = 'none';
+                setLoading(false);
                 trackingResult.style.display = 'none';
                 showAlert('Ocurrió un error al consultar el tracking. Inténtalo nuevamente.', 'danger');
             });

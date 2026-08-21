@@ -1204,7 +1204,7 @@ a:hover {
 }
 
 .section-title {
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(2rem, 3vw, 2.5rem);
   font-weight: 600;
   line-height: 1.2;
   color: var(--cargo-ink);
@@ -1568,7 +1568,7 @@ a:hover {
 
 .page-title {
   text-align: left;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 20px;
   color: #fff;
@@ -2072,6 +2072,40 @@ a:hover {
   letter-spacing: 1px;
 }
 
+/* Loading overlay */
+.track-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.track-loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  padding: 34px 48px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.track-loading-box .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.track-loading-box p {
+  margin: 0;
+  color: var(--cargo-ink);
+  font-weight: 600;
+}
+
 .shipment-info-card {
   background: #f8fafc;
   padding: 40px;
@@ -2278,6 +2312,67 @@ a:hover {
 .timeline-content .desc {
   margin-bottom: 0;
   color: var(--cargo-muted);
+}
+
+/* Actividades agrupadas por fase */
+.fase-actividades {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.fase-actividades li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  font-size: 0.95rem;
+}
+
+.fase-actividades li > i {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.fase-actividades .act-title {
+  display: block;
+  font-weight: 600;
+  color: var(--cargo-ink);
+}
+
+.fase-actividades .act-obs {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--cargo-muted);
+  margin-top: 2px;
+}
+
+.fase-actividades .act-fecha {
+  margin-left: auto;
+  color: var(--cargo-muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.timeline-item.active .fase-actividades li {
+  border-color: rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.04);
+}
+
+.timeline-item.active .fase-actividades li > i {
+  color: var(--cargo-blue);
+  animation: bounce-icon 2s infinite;
+}
+
+.fase-pendiente {
+  margin-top: 14px;
+  font-style: italic;
 }
 .blog-detail-content { font-size: 1.1rem; line-height: 1.8; color: var(--cargo-muted); }
 .blog-detail-content h3 { margin-top: 40px; margin-bottom: 20px; color: var(--cargo-ink); }
@@ -4341,4 +4436,45 @@ a:hover {
   .blog-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ============================================
+   FAQ ACCORDION
+   ============================================ */
+#faqAccordion .accordion-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+#faqAccordion .accordion-button {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--cargo-ink);
+  padding: 18px 24px;
+  background: #fff;
+  box-shadow: none;
+}
+
+#faqAccordion .accordion-button:not(.collapsed) {
+  background: rgba(37, 99, 235, 0.05);
+  color: var(--cargo-blue);
+}
+
+#faqAccordion .accordion-button::after {
+  width: 1.2rem;
+  height: 1.2rem;
+  background-size: 1.2rem;
+}
+
+#faqAccordion .accordion-button:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+#faqAccordion .accordion-body {
+  color: var(--cargo-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 0 24px 20px;
 }
