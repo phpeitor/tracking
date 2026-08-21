@@ -438,7 +438,6 @@ $(document).ready(function() {
     const trackInput = document.getElementById('track-input');
     const trackBtn = document.getElementById('track-btn');
     const trackLoading = document.getElementById('track-loading');
-    const trackAlert = document.getElementById('track-alert');
     const trackingResult = document.getElementById('tracking-result');
     const trackingTimeline = document.getElementById('tracking-timeline');
 
@@ -480,13 +479,12 @@ $(document).ready(function() {
     }
 
     function showAlert(message, type) {
-        trackAlert.innerHTML = '';
         if (!message) return;
-        const div = document.createElement('div');
-        div.className = 'alert alert-' + (type === 'success' ? 'success' : 'danger') + ' mt-4';
-        div.setAttribute('role', 'alert');
-        div.textContent = message;
-        trackAlert.appendChild(div);
+        if (type === 'success') {
+            alertify.success(message);
+        } else {
+            alertify.error(message);
+        }
     }
 
     function groupActividadesByFase(actividades) {
@@ -627,25 +625,27 @@ $(document).ready(function() {
         showAlert('', 'danger');
         setLoading(true);
 
-        fetch(TRACKING_API + '?cod_tracking=' + encodeURIComponent(code))
-            .then(function(response) {
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                return response.json();
-            })
-            .then(function(json) {
-                setLoading(false);
-                if (json.ok && json.data) {
-                    renderResult(json.data);
-                } else {
+        setTimeout(function() {
+            fetch(TRACKING_API + '?cod_tracking=' + encodeURIComponent(code))
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
+                .then(function(json) {
+                    setLoading(false);
+                    if (json.ok && json.data) {
+                        renderResult(json.data);
+                    } else {
+                        trackingResult.style.display = 'none';
+                        showAlert(json.message || 'No se encontro informacion para el codigo ingresado.', 'danger');
+                    }
+                })
+                .catch(function() {
+                    setLoading(false);
                     trackingResult.style.display = 'none';
-                    showAlert(json.message || 'No se encontró información para el código ingresado.', 'danger');
-                }
-            })
-            .catch(function() {
-                setLoading(false);
-                trackingResult.style.display = 'none';
-                showAlert('Ocurrió un error al consultar el tracking. Inténtalo nuevamente.', 'danger');
-            });
+                    showAlert('Ocurrio un error al consultar el tracking. Intentalo nuevamente.', 'danger');
+                });
+        }, 800);
     }
 
     function initTracking() {
@@ -654,10 +654,18 @@ $(document).ready(function() {
                 e.preventDefault();
                 const code = trackInput.value.trim();
                 if (!code) {
-                    showAlert('Por favor ingresa un código de tracking.', 'danger');
+                    trackInput.style.borderColor = '#ef4444';
+                    showAlert('Por favor ingresa un codigo de tracking.', 'danger');
                     return;
                 }
+                trackInput.style.borderColor = '';
                 loadTracking(code);
+            });
+
+            trackInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = '';
+                }
             });
         }
 
