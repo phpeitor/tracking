@@ -2082,6 +2082,7 @@ a:hover {
   position: fixed;
   inset: 0;
   z-index: 9999;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(15, 23, 42, 0.6);
@@ -4482,4 +4483,123 @@ a:hover {
   font-size: 1rem;
   line-height: 1.7;
   padding: 0 24px 20px;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .cargo-header,
+  .page-header,
+  .tracking-search-box,
+  .track-form-large,
+  .track-form-section,
+  #track-loading,
+  #track-print-btn,
+  .footer-main,
+  .progress-wrap,
+  #extra-wrap,
+  #preloader {
+    display: none !important;
+  }
+
+  .section-padding:has(#faqAccordion) {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .section-padding {
+    padding: 0 !important;
+  }
+
+  #tracking-result {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    left: auto;
+    top: auto;
+    padding: 20px 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+  }
+
+  #tracking-result .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .shipment-info-card {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    padding: 15px !important;
+  }
+
+  .shipment-list li {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 6px 0 !important;
+    border-bottom: 1px solid #eee !important;
+  }
+
+  .tracking-timeline {
+    border: none !important;
+    padding-left: 60px !important;
+    padding-top: 10px !important;
+    overflow: visible !important;
+  }
+
+  .tracking-timeline::before {
+    left: 24px !important;
+  }
+
+  .timeline-marker {
+    overflow: visible !important;
+    clip: auto !important;
+  }
+
+  .timeline-item {
+    page-break-inside: avoid;
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+  }
+
+  .timeline-item::before,
+  .timeline-item::after {
+    display: none !important;
+  }
+
+  .timeline-content::before {
+    display: none !important;
+  }
+
+  .timeline-content {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    padding: 20px !important;
+  }
+
+  .timeline-content .date,
+  .timeline-content .title {
+    color: #333 !important;
+  }
+
+  .fase-actividades li {
+    background: #fff !important;
+    border: 1px solid #eee !important;
+    margin: 4px 0 !important;
+    padding: 8px 10px !important;
+    color: #333 !important;
+  }
+
+  .fase-actividades li .act-title,
+  .fase-actividades li .act-obs,
+  .fase-actividades li .act-fecha {
+    color: #333 !important;
+  }
 }
