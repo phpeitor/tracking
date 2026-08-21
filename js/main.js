@@ -440,6 +440,7 @@ $(document).ready(function() {
     const trackLoading = document.getElementById('track-loading');
     const trackingResult = document.getElementById('tracking-result');
     const trackingTimeline = document.getElementById('tracking-timeline');
+    const trackPrintBtn = document.getElementById('track-print-btn');
 
     const PHASES = [
         { name: 'Inicio', icon: 'fa-box-open' },
@@ -601,6 +602,7 @@ $(document).ready(function() {
 
         renderTimeline(data.actividades);
         trackingResult.style.display = 'block';
+        if (trackPrintBtn) trackPrintBtn.style.display = 'inline-flex';
         trackingResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -654,18 +656,24 @@ $(document).ready(function() {
                 e.preventDefault();
                 const code = trackInput.value.trim();
                 if (!code) {
-                    trackInput.style.borderColor = '#ef4444';
+                    trackInput.classList.add('input-error');
                     showAlert('Por favor ingresa un codigo de tracking.', 'danger');
                     return;
                 }
-                trackInput.style.borderColor = '';
+                trackInput.classList.remove('input-error');
                 loadTracking(code);
             });
 
             trackInput.addEventListener('input', function() {
                 if (this.value.trim()) {
-                    this.style.borderColor = '';
+                    this.classList.remove('input-error');
                 }
+            });
+        }
+
+        if (trackPrintBtn) {
+            trackPrintBtn.addEventListener('click', function() {
+                window.print();
             });
         }
 

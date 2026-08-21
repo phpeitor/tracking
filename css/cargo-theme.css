@@ -2065,6 +2065,11 @@ a:hover {
   background: #fff;
 }
 
+.track-form-large input.input-error {
+  border: 2px solid #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
 .track-form-large .btn {
   padding: 0 40px;
   font-weight: 700;
