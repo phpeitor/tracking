@@ -630,22 +630,28 @@ $(document).ready(function() {
         setTimeout(function() {
             fetch(TRACKING_API + '?cod_tracking=' + encodeURIComponent(code))
                 .then(function(response) {
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    return response.json();
+                    return response.json().catch(function() {
+                        throw new Error('Error del servidor (' + response.status + '). Verifica la configuracion del API.');
+                    }).then(function(json) {
+                        if (!response.ok || !json.ok) {
+                            throw new Error(json.message || 'Codigo no encontrado');
+                        }
+                        return json;
+                    });
                 })
                 .then(function(json) {
                     setLoading(false);
-                    if (json.ok && json.data) {
+                    if (json.data) {
                         renderResult(json.data);
                     } else {
                         trackingResult.style.display = 'none';
-                        showAlert(json.message || 'No se encontro informacion para el codigo ingresado.', 'danger');
+                        showAlert('No se encontro informacion para el codigo ingresado.', 'danger');
                     }
                 })
-                .catch(function() {
+                .catch(function(err) {
                     setLoading(false);
                     trackingResult.style.display = 'none';
-                    showAlert('Ocurrio un error al consultar el tracking. Intentalo nuevamente.', 'danger');
+                    showAlert(err.message || 'Ocurrio un error al consultar el tracking. Intentalo nuevamente.', 'danger');
                 });
         }, 800);
     }
