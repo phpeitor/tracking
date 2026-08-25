@@ -328,6 +328,11 @@ h5{ font-size:13pt; font-weight:300;  }
   cursor:pointer;
 }
 
+.logo img {
+  max-width: 180px;
+  height: auto;
+}
+
 /* overlay background */
 .overlayintro {
   position:absolute;
