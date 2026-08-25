@@ -224,12 +224,12 @@ z-index: 9999;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-.soundOnintro{ background:url("../img/soundon.png");  -webkit-transition: all 0.3s ease;
+.soundOnintro{ background:url("../resources/soundon.png");  -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;}
-.soundOffintro{ background:url("../img/soundoff.png");  -webkit-transition: all 0.3s ease;
+.soundOffintro{ background:url("../resources/soundoff.png");  -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
