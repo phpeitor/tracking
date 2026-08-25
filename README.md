@@ -108,16 +108,6 @@ La página muestra:
 - **Línea de tiempo**: Actividades agrupadas por fase (solo fases con datos).
 - **Botón Imprimir**: Genera una vista limpia para impresión.
 
-## Dependencias
-
-| Librería      | Versión  | Tipo       | Fuente                              |
-|---------------|----------|------------|-------------------------------------|
-| Bootstrap     | 5.3.3    | JS/CSS     | `js/plugins.js` (local)            |
-| jQuery        | 3.7.1    | JS         | `js/jquery.min.js` (local)         |
-| Font Awesome  | 6.x      | CSS        | CDN (`all.min.css`)                 |
-| AlertifyJS    | 1.14.0   | JS/CSS     | CDN                                 |
-| Swiper        | —        | JS/CSS     | CDN (carrusel del header)           |
-
 ## Notas para el equipo
 
 - **No agregar lógica inline** en `index.html`. Toda la interacción va en `main.js`.
