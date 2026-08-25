@@ -18,7 +18,7 @@ $(window).on("load", function () {
 
   // redirect landing page
   function directpage() {
-    window.location.href = 'https://on3-step.com/cargonz/index.html';
+    window.location.href = 'index.html';
   }
 
   // =================
