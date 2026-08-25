@@ -599,6 +599,7 @@ $(document).ready(function() {
             setField('ship-created', formatDate(data.created_at));
             setField('ship-updated', formatDate(data.updated_at));
         }
+        setField('ship-descripcion', data.descripcion || '-');
 
         renderTimeline(data.actividades);
         trackingResult.style.display = 'block';
