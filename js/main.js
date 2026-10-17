@@ -443,11 +443,11 @@ $(document).ready(function() {
     const trackPrintBtn = document.getElementById('track-print-btn');
 
     const PHASES = [
-        { name: 'Inicio', icon: 'fa-box-open' },
-        { name: 'Planificación', icon: 'fa-clipboard-list' },
-        { name: 'Fabricación', icon: 'fa-industry' },
-        { name: 'Instalación / Entrega', icon: 'fa-truck-ramp-box' },
-        { name: 'Cierre', icon: 'fa-flag-checkered' }
+        { name: 'Inicio', image: 'inicio.png' },
+        { name: 'Planificación', image: 'planificacion.png' },
+        { name: 'Fabricación', image: 'fabricacion.png' },
+        { name: 'Instalación / Entrega', image: 'instalacion-entrega.png' },
+        { name: 'Cierre', image: 'cierre.png' }
     ];
 
     function normalizeFase(fase) {
@@ -522,7 +522,7 @@ $(document).ready(function() {
 
             const marker = document.createElement('div');
             marker.className = 'timeline-marker';
-            marker.innerHTML = '<i class="fa-solid ' + p.icon + '"></i>';
+            marker.innerHTML = '<img class="timeline-phase-icon" src="./resources/' + p.image + '" alt="Fase ' + p.name + '" loading="lazy">';
 
             const content = document.createElement('div');
             content.className = 'timeline-content';

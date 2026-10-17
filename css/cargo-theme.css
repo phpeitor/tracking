@@ -2191,6 +2191,13 @@ a:hover {
   transition: all 0.3s ease;
 }
 
+.timeline-marker .timeline-phase-icon {
+  display: block;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
 .timeline-item.active .timeline-marker {
   border-color: var(--cargo-blue);
   background: var(--cargo-blue);
@@ -4543,15 +4550,23 @@ body.tracking-brand-theme .track-form-large input:focus {
 body.tracking-brand-theme .track-form-large .btn,
 body.tracking-brand-theme .btn-primary {
   color: #06110d !important;
-  background: var(--brand-accent);
-  border-color: var(--brand-accent);
+  background: var(--brand-accent) !important;
+  border-color: var(--brand-accent) !important;
+  box-shadow: 0 6px 16px rgba(51, 255, 194, 0.16);
 }
 
 body.tracking-brand-theme .track-form-large .btn:hover,
 body.tracking-brand-theme .btn-primary:hover {
+  color: #06110d !important;
+  background: #75ffd8 !important;
+  border-color: #75ffd8 !important;
+  box-shadow: 0 10px 24px rgba(51, 255, 194, 0.24);
+}
+
+body.tracking-brand-theme .track-form-large .btn-primary::before,
+body.tracking-brand-theme .track-form-large .btn-primary:hover::before {
   color: #06110d;
   background: #75ffd8;
-  border-color: #75ffd8;
 }
 
 body.tracking-brand-theme .text-primary {
@@ -4602,15 +4617,21 @@ body.tracking-brand-theme .tracking-timeline::before {
 body.tracking-brand-theme .timeline-marker,
 body.tracking-brand-theme .timeline-content::before {
   color: var(--brand-accent);
-  background: var(--brand-surface);
+  background: #fff;
   border-color: var(--brand-accent);
 }
 
 body.tracking-brand-theme .timeline-item.active .timeline-marker,
 body.tracking-brand-theme .timeline-item.completed .timeline-marker {
   color: #06110d;
-  background: var(--brand-accent);
+  background: #fff;
   border-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .timeline-marker {
+  left: -57px;
+  width: 64px;
+  height: 64px;
 }
 
 body.tracking-brand-theme .fase-actividades li {
