@@ -594,7 +594,7 @@ $(document).ready(function() {
         setField('ship-tracking-id', codigoPublico(data));
         setField('ship-nombre', data.nombre || '-');
         setField('ship-empresa', data.razon_social_empresa || '-');
-        setField('ship-ruc', data.ruc || '-');
+        setField('ship-oc', data.num_oc || '-');
         if (data.created_at || data.updated_at) {
             setField('ship-created', formatDate(data.created_at));
             setField('ship-updated', formatDate(data.updated_at));
