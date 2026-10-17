@@ -1587,7 +1587,7 @@ a:hover {
 }
 
 .breadcrumb a { color: #fff; }
-.breadcrumb span { color: var(--cargo-blue); }
+.breadcrumb span { color: #fff; }
 
 /* ============================================
    23. ABOUT PAGE
@@ -4483,6 +4483,208 @@ a:hover {
   font-size: 1rem;
   line-height: 1.7;
   padding: 0 24px 20px;
+}
+
+/* ============================================
+   MG INDUSOL BRAND THEME — TRACKING PAGE
+   ============================================ */
+body.tracking-brand-theme {
+  --brand-black: #050807;
+  --brand-surface: #101613;
+  --brand-surface-raised: #171f1b;
+  --brand-accent: #33ffc2;
+  --brand-text: #f2f7f5;
+  --brand-muted: #b0c0b9;
+  --brand-border: rgba(51, 255, 194, 0.22);
+  color: var(--brand-text);
+  background: var(--brand-black);
+}
+
+body.tracking-brand-theme .cargo-header,
+body.tracking-brand-theme .section-padding,
+body.tracking-brand-theme #faq-section {
+  background-color: #05080740 !important;
+}
+
+body.tracking-brand-theme .cargo-header {
+  border-bottom: 1px solid var(--brand-border);
+}
+
+body.tracking-brand-theme .section-padding {
+  color: var(--brand-text);
+}
+
+body.tracking-brand-theme .section-title,
+body.tracking-brand-theme .h4-style,
+body.tracking-brand-theme .h5-style,
+body.tracking-brand-theme .page-title {
+  color: var(--brand-text);
+}
+
+body.tracking-brand-theme .tracking-search-box .section-title::after {
+  background: var(--brand-accent);
+}
+
+body.tracking-brand-theme .track-form-large input {
+  color: var(--brand-text);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+}
+
+body.tracking-brand-theme .track-form-large input::placeholder {
+  color: var(--brand-muted);
+}
+
+body.tracking-brand-theme .track-form-large input:focus {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 3px rgba(51, 255, 194, 0.16);
+}
+
+body.tracking-brand-theme .track-form-large .btn,
+body.tracking-brand-theme .btn-primary {
+  color: #06110d !important;
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .track-form-large .btn:hover,
+body.tracking-brand-theme .btn-primary:hover {
+  color: #06110d;
+  background: #75ffd8;
+  border-color: #75ffd8;
+}
+
+body.tracking-brand-theme .text-primary {
+  color: var(--brand-accent) !important;
+}
+
+body.tracking-brand-theme #track-print-btn {
+  color: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme #track-print-btn:hover {
+  color: #06110d;
+  background: var(--brand-accent);
+}
+
+body.tracking-brand-theme .shipment-info-card,
+body.tracking-brand-theme .timeline-content {
+  color: var(--brand-text);
+  background: var(--brand-surface);
+  border-color: var(--brand-border);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+}
+
+body.tracking-brand-theme .shipment-list li {
+  border-color: var(--brand-border);
+}
+
+body.tracking-brand-theme .shipment-list .label,
+body.tracking-brand-theme .timeline-content .desc,
+body.tracking-brand-theme .fase-actividades li,
+body.tracking-brand-theme .fase-actividades li .act-title,
+body.tracking-brand-theme .fase-actividades li .act-obs,
+body.tracking-brand-theme .fase-actividades li .act-fecha {
+  color: var(--brand-muted);
+}
+
+body.tracking-brand-theme .shipment-list .value,
+body.tracking-brand-theme .timeline-content .date,
+body.tracking-brand-theme .timeline-content .title {
+  color: var(--brand-text);
+}
+
+body.tracking-brand-theme .tracking-timeline::before {
+  background: var(--brand-border);
+}
+
+body.tracking-brand-theme .timeline-marker,
+body.tracking-brand-theme .timeline-content::before {
+  color: var(--brand-accent);
+  background: var(--brand-surface);
+  border-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .timeline-item.active .timeline-marker,
+body.tracking-brand-theme .timeline-item.completed .timeline-marker {
+  color: #06110d;
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .fase-actividades li {
+  background: var(--brand-surface-raised);
+  border-color: var(--brand-border);
+}
+
+body.tracking-brand-theme #faqAccordion .accordion-item {
+  background: var(--brand-surface);
+  border-color: var(--brand-border);
+}
+
+body.tracking-brand-theme #faqAccordion .accordion-button,
+body.tracking-brand-theme #faqAccordion .accordion-button:not(.collapsed) {
+  color: var(--brand-text);
+  background: var(--brand-surface);
+}
+
+body.tracking-brand-theme #faqAccordion .accordion-button:not(.collapsed) {
+  color: var(--brand-accent);
+}
+
+body.tracking-brand-theme #faqAccordion .accordion-button::after {
+  filter: invert(82%) sepia(67%) saturate(508%) hue-rotate(98deg) brightness(105%);
+}
+
+body.tracking-brand-theme #faqAccordion .accordion-body {
+  color: var(--brand-muted);
+}
+
+body.tracking-brand-theme .footer-main {
+  color: var(--brand-muted);
+  background: var(--brand-black);
+  border-top: 1px solid var(--brand-border);
+}
+
+body.tracking-brand-theme .footer-main a,
+body.tracking-brand-theme .breadcrumb a,
+body.tracking-brand-theme .breadcrumb .breadcrumb-icon,
+body.tracking-brand-theme .fase-actividades li > i,
+body.tracking-brand-theme .act-obs {
+  color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .progress-wrap {
+  background: var(--brand-surface);
+}
+
+body.tracking-brand-theme .progress-wrap path {
+  stroke: var(--brand-accent);
+}
+
+body.tracking-brand-theme .progress-wrap::after,
+body.tracking-brand-theme .progress-wrap::before {
+  color: var(--brand-accent);
+  -webkit-text-fill-color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .progress-wrap::before {
+  background: none;
+}
+
+body.tracking-brand-theme .track-loading-box {
+  color: var(--brand-text);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+}
+
+body.tracking-brand-theme .track-loading-box p {
+  color: var(--brand-text);
+}
+
+body.tracking-brand-theme .track-loading-box .spinner-border {
+  color: var(--brand-accent) !important;
 }
 
 /* ============================================
