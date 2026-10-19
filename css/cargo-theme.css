@@ -4601,6 +4601,16 @@ body.tracking-brand-theme .fase-actividades li > i {
   color: var(--activity-color, #facc15);
 }
 
+body.tracking-brand-theme .fase-actividades .act-color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  border-radius: 50%;
+  background: var(--activity-color, #facc15);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
 body.tracking-brand-theme .tracking-color-legend {
   display: flex;
   flex-wrap: wrap;
