@@ -2300,6 +2300,7 @@ a:hover {
   border-radius: 10px;
   background: #f8fafc;
   border: 1px solid #f1f5f9;
+  border-left: 3px solid var(--activity-color, #facc15);
   font-size: 0.95rem;
 }
 
@@ -4591,8 +4592,54 @@ body.tracking-brand-theme .timeline-marker {
 }
 
 body.tracking-brand-theme .fase-actividades li {
-  background: var(--brand-surface-raised);
-  border-color: var(--brand-border);
+  background: color-mix(in srgb, var(--activity-color, #facc15) 10%, var(--brand-surface-raised));
+  border-color: color-mix(in srgb, var(--activity-color, #facc15) 48%, var(--brand-border));
+  border-left: 3px solid var(--activity-color, #facc15);
+}
+
+body.tracking-brand-theme .fase-actividades li > i {
+  color: var(--activity-color, #facc15);
+}
+
+body.tracking-brand-theme .tracking-color-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: -8px 0 22px;
+  color: var(--brand-muted);
+  font-size: 0.82rem;
+}
+
+body.tracking-brand-theme .tracking-color-legend > span:not(.tracking-color-legend-title) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+body.tracking-brand-theme .tracking-color-legend-title {
+  color: var(--brand-text);
+  font-weight: 600;
+}
+
+body.tracking-brand-theme .tracking-color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  border-radius: 50%;
+}
+
+body.tracking-brand-theme .tracking-color-critical { background: #ef4444; }
+body.tracking-brand-theme .tracking-color-delay { background: #f97316; }
+body.tracking-brand-theme .tracking-color-scheduled { background: #facc15; }
+body.tracking-brand-theme .tracking-color-completed { background: #22c55e; }
+
+@media (max-width: 767.98px) {
+  body.tracking-brand-theme .tracking-color-legend {
+    gap: 8px 12px;
+    margin-bottom: 18px;
+  }
 }
 
 body.tracking-brand-theme #faqAccordion .accordion-item {

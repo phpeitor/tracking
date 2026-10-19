@@ -530,7 +530,8 @@ $(document).ready(function() {
             const itemsHtml = group.items.map(function(act) {
                 let obs = '';
                 if (act.observacion) obs = '<span class="act-obs">' + act.observacion + '</span>';
-                return '<li><i class="fa-solid fa-check"></i><div>' +
+                const color = /^#[0-9a-f]{6}$/i.test(String(act.color || '')) ? act.color : '#facc15';
+                return '<li style="--activity-color: ' + color + '"><i class="fa-solid fa-check"></i><span class="act-color-dot" aria-hidden="true"></span><div>' +
                     '<span class="act-title">' + act.actividad + '</span>' + obs +
                     '</div><span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
             }).join('');
@@ -562,7 +563,8 @@ $(document).ready(function() {
             const content = document.createElement('div');
             content.className = 'timeline-content';
             const itemsHtml = group.items.map(function(act) {
-                return '<li><i class="fa-solid fa-check"></i><div><span class="act-title">' + act.actividad + '</span></div>' +
+                const color = /^#[0-9a-f]{6}$/i.test(String(act.color || '')) ? act.color : '#facc15';
+                return '<li style="--activity-color: ' + color + '"><i class="fa-solid fa-check"></i><span class="act-color-dot" aria-hidden="true"></span><div><span class="act-title">' + act.actividad + '</span></div>' +
                     '<span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
             }).join('');
             content.innerHTML = '<span class="date">' + group.fase + '</span>' +
