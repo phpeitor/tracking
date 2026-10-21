@@ -479,6 +479,16 @@ $(document).ready(function() {
         return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
+    function hasActivityDate(date) {
+        const value = String(date || '').trim();
+        return value !== '' && value !== '-' && value !== '0000-00-00';
+    }
+
+    function activityDateMarkup(date) {
+        if (!hasActivityDate(date)) return '';
+        return '<span class="act-fecha">' + formatDateOnly(date) + '</span>';
+    }
+
     function showAlert(message, type) {
         if (!message) return;
         if (type === 'success') {
@@ -533,14 +543,16 @@ $(document).ready(function() {
                 const color = /^#[0-9a-f]{6}$/i.test(String(act.color || '')) ? act.color : '#facc15';
                 return '<li style="--activity-color: ' + color + '"><i class="fa-solid fa-check"></i><span class="act-color-dot" aria-hidden="true"></span><div>' +
                     '<span class="act-title">' + act.actividad + '</span>' + obs +
-                    '</div><span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
+                    '</div>' + activityDateMarkup(act.fecha) + '</li>';
             }).join('');
 
-            const fechas = group.items.map(function(act) { return act.fecha; }).filter(Boolean);
+            const fechas = group.items.map(function(act) { return act.fecha; }).filter(function(fecha) {
+                return hasActivityDate(fecha);
+            });
             const rango = fechas.length === 1 ? formatDateOnly(fechas[0])
-                : formatDateOnly(fechas[0]) + ' - ' + formatDateOnly(fechas[fechas.length - 1]);
+                : (fechas.length > 1 ? formatDateOnly(fechas[0]) + ' - ' + formatDateOnly(fechas[fechas.length - 1]) : '');
 
-            content.innerHTML = '<span class="date">' + rango + '</span>' +
+            content.innerHTML = (rango ? '<span class="date">' + rango + '</span>' : '') +
                 '<h3 class="h5-style title">' + (group.fase || p.name) + '</h3>' +
                 '<ul class="fase-actividades">' + itemsHtml + '</ul>';
 
@@ -565,9 +577,14 @@ $(document).ready(function() {
             const itemsHtml = group.items.map(function(act) {
                 const color = /^#[0-9a-f]{6}$/i.test(String(act.color || '')) ? act.color : '#facc15';
                 return '<li style="--activity-color: ' + color + '"><i class="fa-solid fa-check"></i><span class="act-color-dot" aria-hidden="true"></span><div><span class="act-title">' + act.actividad + '</span></div>' +
-                    '<span class="act-fecha">' + formatDateOnly(act.fecha) + '</span></li>';
+                    activityDateMarkup(act.fecha) + '</li>';
             }).join('');
-            content.innerHTML = '<span class="date">' + group.fase + '</span>' +
+            const fechas = group.items.map(function(act) { return act.fecha; }).filter(function(fecha) {
+                return hasActivityDate(fecha);
+            });
+            const rango = fechas.length === 1 ? formatDateOnly(fechas[0])
+                : (fechas.length > 1 ? formatDateOnly(fechas[0]) + ' - ' + formatDateOnly(fechas[fechas.length - 1]) : '');
+            content.innerHTML = (rango ? '<span class="date">' + rango + '</span>' : '') +
                 '<h3 class="h5-style title">' + group.fase + '</h3>' +
                 '<ul class="fase-actividades">' + itemsHtml + '</ul>';
             item.appendChild(marker);
@@ -602,6 +619,26 @@ $(document).ready(function() {
             setField('ship-updated', formatDate(data.updated_at));
         }
         setField('ship-descripcion', data.descripcion || '-');
+
+        const progressCard = document.getElementById('tracking-project-progress');
+        const progressValue = document.getElementById('tracking-project-progress-value');
+        const progressTrack = document.querySelector('.tracking-project-progress-track');
+        const progressBar = document.getElementById('tracking-project-progress-bar');
+        const formattedProgress = String(data.avance_proyecto_formateado || '').trim();
+        if (progressCard && progressValue && progressTrack && progressBar) {
+            if (formattedProgress) {
+                const numericProgress = Number.parseFloat(formattedProgress.replace(',', '.'));
+                const clampedProgress = Number.isFinite(numericProgress)
+                    ? Math.min(100, Math.max(0, numericProgress))
+                    : 0;
+                progressValue.textContent = formattedProgress;
+                progressBar.style.width = clampedProgress + '%';
+                progressTrack.setAttribute('aria-valuenow', String(clampedProgress));
+                progressCard.style.display = '';
+            } else {
+                progressCard.style.display = 'none';
+            }
+        }
 
         renderTimeline(data.actividades);
         trackingResult.style.display = 'block';

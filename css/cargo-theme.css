@@ -4548,6 +4548,45 @@ body.tracking-brand-theme .timeline-content {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
 }
 
+body.tracking-brand-theme .tracking-project-progress {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+body.tracking-brand-theme .tracking-project-progress-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: var(--brand-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+body.tracking-brand-theme .tracking-project-progress-heading strong {
+  color: var(--brand-accent);
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+body.tracking-brand-theme .tracking-project-progress-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.tracking-brand-theme .tracking-project-progress-track > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand-accent);
+  transition: width 0.5s ease;
+}
+
 body.tracking-brand-theme .shipment-list li {
   border-color: var(--brand-border);
 }
