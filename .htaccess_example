@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_URI} ^(.*)/(js|css|resources|plugin|webfonts|config)/?$
+    RewriteRule ^(js|css|resources|plugin|webfonts|config)/?$ %1/main.html [R=302,L,NC]
+
+    ErrorDocument 404 /main.html
+    ErrorDocument 403 /main.html
+
+    # Evita listar directorios
+    Options -Indexes
+</IfModule>
+
+<IfModule php8_module>
+   php_value error_log "/home/snvnrpef/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+<IfModule lsapi_module>
+   php_value error_log "/home/snvnrpef/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
