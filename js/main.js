@@ -474,17 +474,10 @@ $(document).ready(function() {
 
     function formatDateTime(str) {
         if (!str) return 'Sin registro';
-        const d = new Date(String(str).replace(' ', 'T'));
-        if (isNaN(d)) return str;
-        return d.toLocaleString('es-PE', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hourCycle: 'h23'
-        });
+        const match = String(str).match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::\d{2})?)?/);
+        if (!match) return str;
+        const date = match[3] + '/' + match[2] + '/' + match[1];
+        return match[4] ? date + ' · ' + match[4] + ':' + match[5] : date;
     }
 
     function formatDateOnly(str) {
@@ -629,7 +622,15 @@ $(document).ready(function() {
         setField('ship-nombre', data.nombre || '-');
         setField('ship-empresa', data.razon_social_empresa || '-');
         setField('ship-oc', data.num_oc || '-');
-        setField('ship-updated', formatDateTime(data.updated_at));
+        const updatedAtField = document.getElementById('ship-updated');
+        if (updatedAtField) {
+            updatedAtField.textContent = formatDateTime(data.updated_at);
+            if (data.updated_at) {
+                updatedAtField.setAttribute('datetime', String(data.updated_at).replace(' ', 'T'));
+            } else {
+                updatedAtField.removeAttribute('datetime');
+            }
+        }
         setField('ship-descripcion', data.descripcion || '-');
 
         const progressCard = document.getElementById('tracking-project-progress');

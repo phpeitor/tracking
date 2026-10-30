@@ -4587,6 +4587,26 @@ body.tracking-brand-theme .tracking-project-progress-track > span {
   transition: width 0.5s ease;
 }
 
+body.tracking-brand-theme .tracking-updated-at {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--brand-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+body.tracking-brand-theme .tracking-updated-at > i {
+  color: var(--brand-accent);
+}
+
+body.tracking-brand-theme .tracking-updated-at time {
+  margin-left: auto;
+  color: var(--brand-text);
+  font-variant-numeric: tabular-nums;
+}
+
 body.tracking-brand-theme .shipment-list li {
   border-color: var(--brand-border);
 }
