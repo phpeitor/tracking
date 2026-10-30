@@ -472,6 +472,21 @@ $(document).ready(function() {
         return datePart + ' - ' + timePart;
     }
 
+    function formatDateTime(str) {
+        if (!str) return 'Sin registro';
+        const d = new Date(String(str).replace(' ', 'T'));
+        if (isNaN(d)) return str;
+        return d.toLocaleString('es-PE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23'
+        });
+    }
+
     function formatDateOnly(str) {
         if (!str) return '-';
         const d = new Date(str + 'T00:00:00');
@@ -614,10 +629,7 @@ $(document).ready(function() {
         setField('ship-nombre', data.nombre || '-');
         setField('ship-empresa', data.razon_social_empresa || '-');
         setField('ship-oc', data.num_oc || '-');
-        if (data.created_at || data.updated_at) {
-            setField('ship-created', formatDate(data.created_at));
-            setField('ship-updated', formatDate(data.updated_at));
-        }
+        setField('ship-updated', formatDateTime(data.updated_at));
         setField('ship-descripcion', data.descripcion || '-');
 
         const progressCard = document.getElementById('tracking-project-progress');
